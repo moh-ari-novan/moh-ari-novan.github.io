@@ -1,0 +1,93 @@
+﻿@model GeekseatViewModel
+
+@{
+    ViewData["Title"] = "GeekSeat Test";
+}
+
+<h1>GeekSeat Test</h1>
+
+<form asp-action="Result" method="post" class="form-horizontal" role="form">
+    <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-md-6">
+            <h3>First Person</h3>
+            <div class="form-group">
+                <label for="txtFirstDeathAge">Death Age :</label>
+                <div class="input-group">
+                    <input type="number" id="txtFirstDeathAge" name="txtFirstDeathAge" value="@Model.FirstPerson.DeathAge" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="txtFirstDeathYear">Death Year :</label>
+                <div class="input-group">
+                    <input type="number" id="txtFirstDeathYear" name="txtFirstDeathYear" value="@Model.FirstPerson.DeathYear" required />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>Second Person</h3>
+            <div class="form-group">
+                <label for="txtSecondDeathAge">Death Age :</label>
+                <div class="input-group">
+                    <input type="number" id="txtSecondDeathAge" name="txtSecondDeathAge" value="@Model.SecondPerson.DeathAge" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="txtSecondDeathYear">Death Year :</label>
+                <div class="input-group">
+                    <input type="number" id="txtSecondDeathYear" name="txtSecondDeathYear" value="@Model.SecondPerson.DeathYear" required />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+        <div class="col-md-12">
+            First Person born on Year = @(Model.FirstPerson.DeathYear) – @(Model.FirstPerson.DeathAge) = @(Model.FirstPerson.YearOfKilled),
+            @if (Model.FirstPerson.IsValid)
+            {
+                @:number of people killed on year @(Model.FirstPerson.YearOfKilled) is @(Model.FirstPerson.KilledPeopleByYear).
+            }
+            else
+            {
+                @:Return -1. invalid data given.
+            }
+        </div>
+        <div class="col-md-12">
+            Second Person born on Year = @(Model.SecondPerson.DeathYear) – @(Model.SecondPerson.DeathAge) = @(Model.SecondPerson.YearOfKilled),
+            @if (Model.SecondPerson.IsValid)
+            {
+                @:number of people killed on year @(Model.SecondPerson.YearOfKilled) is @(Model.SecondPerson.KilledPeopleByYear).
+            }
+            else
+            {
+                @:Return -1. invalid data given.
+            }
+        </div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-12">
+            @if (Model.FirstPerson.KilledPeopleByYear < 0 || Model.SecondPerson.KilledPeopleByYear < 0)
+            {
+                @:Return -1. Invalid data.
+            }
+            else
+            {
+                @:Average is ( @(Model.FirstPerson.KilledPeopleByYear) + @(Model.SecondPerson.KilledPeopleByYear) )/2 = @(Model.AverageDeath)
+            }
+
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

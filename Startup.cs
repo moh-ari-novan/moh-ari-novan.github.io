@@ -50,7 +50,7 @@ namespace GeekSeat
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Geekseat}/{action=Index}/{id?}");
             });
         }
     }
