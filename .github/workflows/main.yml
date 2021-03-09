@@ -27,13 +27,15 @@ jobs:
         run: dotnet test
       #Publish
       - name: Publish 
-        run: dotnet publish GeekSeat.csproj -c Release -o release --nologo
-        
-     #Publish to GithubPages
-      - name: Commit wwwroot to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        run: dotnet publish GeekSeat.csproj -c Release
+      # Publish the website
+      - name: GitHub Pages action
+        if: ${{ github.ref == 'refs/heads/master' }} # Publish only when the push is on master
+        uses: peaceiris/actions-gh-pages@v3.6.1
         with:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_GEEKSEAT }}
-          BRANCH: gh-pages
-          FOLDER: release/wwwroot
-      
+          github_token: ${{ secrets.PUBLISH_GEEKSEAT }}
+          publish_branch: gh-pages
+          publish_dir: bin/Release/netcoreapp3.1/publish/wwwroot
+          allow_empty_commit: false
+          keep_files: false
+          force_orphan: true
